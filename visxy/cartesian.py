@@ -48,7 +48,7 @@ class Cartesian:
 
     def set_y_axis_name(self, y_axis_name: Optional[str] = None):
         if y_axis_name is not None and y_axis_name:
-            self.y_axis_name = f', name: "{y_axis_name}"'
+            self.y_axis_name = f'name: "{y_axis_name}"'
 
     def add_series(
         self,
@@ -112,7 +112,7 @@ class Cartesian:
             end_symbol=end_symbol,
         )
 
-    def render(self):
+    def render(self, fn=None):
         d = {
             "page_title": self.page_title,
             "theme": self.theme,
@@ -126,11 +126,14 @@ class Cartesian:
             "y_max": self.y_max,
         }
 
+        render_fn = fn
+        if render_fn is None:
+            render_fn = f"{self.page_title}.html"
+
         tpl = get_template()
-        page_name = f"./{self.page_title}.html"
-        with open(page_name, "w") as f:
+        with open(render_fn, "w") as f:
             f.write(tpl.substitute(d))
-        print(f"`{page_name}` is rendered.")
+        print(f"`{render_fn}` is rendered.")
 
     def _add_empty_series(self, tag):
         legends = "markline"
