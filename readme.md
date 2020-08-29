@@ -51,7 +51,7 @@ p.set_y_axis_name('y')
 
 # x_column 类型为list, 数值为 数据横坐标的list
 # y_columns 类型为 list, 数值为 数据纵坐标的list, 或 多组数据组成的 list of list
-# legends 类型为 str 或 多个数据组成的 list of str, 与 y_columns 的结构保持一致
+# labels 类型为 str 或 多个数据组成的 list of str, 与 y_columns 的结构保持一致
 
 p.add_series([10, 20], [[30, 40], [50, 10]], ["A", "B"])
 ```

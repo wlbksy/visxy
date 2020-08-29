@@ -54,20 +54,28 @@ class Cartesian:
         self,
         x_column: List[Union[int, float]],
         y_columns: Union[List[Union[int, float]], List[List[Union[int, float]]]],
-        legends: Union[str, List[str]],
+        labels: Union[str, List[str]],
     ):
         if not isinstance(y_columns[0], list):
             y_columns = [y_columns]
-            legends = [legends]
+            labels = [labels]
 
-        dataset = {"source": [["x"] + x_column]}
+        x_column_list = [s for s in x_column]
+        y_columns_list = []
+        for s in y_columns:
+            s_list = []
+            for t in s:
+                s_list.append(t)
+            y_columns_list.append(s_list)
+
+        dataset = {"source": [["x"] + x_column_list]}
         series_list = []
-        for legend, column in zip(legends, y_columns):
-            dataset["source"].append([legend] + column)
+        for label, y_column in zip(labels, y_columns_list):
+            dataset["source"].append([label] + y_column)
             series = {
-                "name": legend,
+                "name": label,
                 "type": self.figure_type,
-                "encode": {"y": legend},
+                "encode": {"y": label},
                 "seriesLayoutBy": "row",
                 "datasetIndex": self.current_dataset_index,
             }
@@ -136,7 +144,7 @@ class Cartesian:
         print(f"`{render_fn}` is rendered.")
 
     def _add_empty_series(self, tag):
-        legends = "markline"
+        labels = "markline"
         if tag is not None:
-            legends = tag
-        self.add_series(x_column=[], y_columns=[[]], legends=[legends])
+            labels = tag
+        self.add_series(x_column=[], y_columns=[[]], labels=[labels])
