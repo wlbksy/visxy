@@ -68,10 +68,11 @@ class Cartesian:
                 s_list.append(t)
             y_columns_list.append(s_list)
 
-        dataset = {"source": [["x"] + x_column_list]}
+        dataset = {"dimensions": ["x"], "source": [x_column_list]}
         series_list = []
         for label, y_column in zip(labels, y_columns_list):
-            dataset["source"].append([label] + y_column)
+            dataset["dimensions"].append(label)
+            dataset["source"].append(y_column)
             series = {
                 "name": label,
                 "type": self.figure_type,
